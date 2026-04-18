@@ -1,0 +1,9 @@
+{
+  "name": "Window Rotate",
+  "description": "Press and hold Super+R to rotate the focused window continuously.",
+  "uuid": "window-rotate@ownderduck.github.com",
+  "shell-version": ["50"],
+  "url": "https://github.com/OwnderDuck/window-rotate",
+  "settings-schema": "org.gnome.shell.extensions.window-rotate",
+  "version": 1
+}

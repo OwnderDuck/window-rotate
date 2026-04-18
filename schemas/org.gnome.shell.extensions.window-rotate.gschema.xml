@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.window-rotate" path="/org/gnome/shell/extensions/window-rotate/">
+    <key name="rotate-step" type="d">
+      <default>1.0</default>
+      <summary>Rotation step (degrees)</summary>
+      <description>Angle added per frame while holding the shortcut.</description>
+    </key>
+    <key name="rotate-window-press" type="as">
+      <default><![CDATA[['<Super>r']]]></default>
+      <summary>Shortcut to start rotating</summary>
+    </key>
+  </schema>
+</schemalist>
