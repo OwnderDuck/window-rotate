@@ -1,3 +1,26 @@
+/*
+ * Compiz-windows-effect for GNOME Shell
+ *
+ * Copyright (C) 2020
+ *     Mauro Pepe <https://github.com/hermes83/compiz-windows-effect>
+ *
+ * This file is part of the gnome-shell extension Compiz-windows-effect.
+ *
+ * gnome-shell extension Compiz-windows-effect is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * gnome-shell extension Compiz-windows-effect is distributed in the hope that it
+ * will be useful, but WITHOUT ANY WARRANTY; without even the
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ * PURPOSE.  See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with gnome-shell extension Compiz-windows-effect.  If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
 'use strict';
 
 import Meta from 'gi://Meta';
@@ -40,16 +63,22 @@ export default class WindowRotateExtension extends Extension {
         actor.set_pivot_point(0.5, 0.5);
         this._rotatingActor = actor;
 
-        const step = this.settingsData.ROTATE_STEP.get();
-        
         // 开启旋转
         this._rotateTimer = setInterval(() => {
             if (!this._rotatingActor || this._rotatingActor.is_destroyed()) {
                 this._stopRotation();
                 return;
             }
-            this._rotatingActor.rotation_angle_z += step;
-        }, 64);
+            const [mouseX, mouseY] = global.get_pointer();
+            const rect = this._rotatingActor.get_transformed_extents();
+            const centerX = rect.origin.x + (rect.size.width / 2);
+            const centerY = rect.origin.y + (rect.size.height / 2);
+
+            const dx = mouseX - centerX;
+            const dy = mouseY - centerY;
+            const angleDeg = Math.atan2(dy, dx) * 180 / Math.PI;
+            this._rotatingActor.rotation_angle_z = angleDeg;
+        }, 16);
 
         // 辅助停止机制：点击鼠标或切换窗口即停止
         if (this._focusId === 0) {
