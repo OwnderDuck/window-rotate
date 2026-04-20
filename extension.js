@@ -92,7 +92,7 @@ export default class WindowRotateExtension extends Extension {
                 : [{ level: displayAngleDeg / 360 + 0.5, maxLevel: 1.0 }];
             Main.osdWindowManager.show(
                 rotateIcon, 
-                `${displayAngleDeg.toFixed(2)}°`,
+                `${displayAngleDeg.toFixed(1)}°`,
                 levels
             );
             
