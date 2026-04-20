@@ -10,5 +10,9 @@
       <default><![CDATA[['<Super>r']]]></default>
       <summary>Shortcut to start rotating</summary>
     </key>
+    <key name="reset-window-rotation" type="as">
+      <default><![CDATA[['<Super><Shift>r']]]></default>
+      <summary>Shortcut to reset rotation to 0 degrees</summary>
+    </key>
   </schema>
 </schemalist>
