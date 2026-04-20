@@ -69,21 +69,30 @@ export default class WindowRotateExtension extends Extension {
 
             const dx = mouseX - centerX;
             const dy = mouseY - centerY;
-            const angleDeg = Math.atan2(dy, dx) * 180 / Math.PI;
+            let angleDeg = Math.atan2(dy, dx) * 180 / Math.PI;
+            while (angleDeg < -180) angleDeg += 180;
+            while (angleDeg >= 180) angleDeg -= 180;
+            // snap
+            const snapThreshold = 1;
+            const snapPoints = [0, 90, 180, 270, -90, -180];
+            
+            for (let snap of snapPoints) {
+                if (Math.abs(angleDeg - snap) < snapThreshold) {
+                    angleDeg = snap;
+                    break;
+                }
+            }
             this._rotatingActor.rotation_angle_z = angleDeg;
-
-            let displayAngle = angleDeg;
-            while (displayAngle < -180) displayAngle += 180;
-            while (displayAngle >= 180) displayAngle -= 180;
+            let displayAngleDeg = angleDeg;
             const levels = global.display.get_n_monitors() > 0 
                 ? Array(global.display.get_n_monitors()).fill({
-                    level: displayAngle / 360 + 0.5,
+                    level: displayAngleDeg / 360 + 0.5,
                     maxLevel: 1.0
                   })
-                : [{ level: displayAngle / 360 + 0.5, maxLevel: 1.0 }];
+                : [{ level: displayAngleDeg / 360 + 0.5, maxLevel: 1.0 }];
             Main.osdWindowManager.show(
                 rotateIcon, 
-                `${Math.floor(displayAngle)}°`, 
+                `${displayAngleDeg.toFixed(2)}°`,
                 levels
             );
             
