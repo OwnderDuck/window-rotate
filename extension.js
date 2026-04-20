@@ -56,6 +56,14 @@ export default class WindowRotateExtension extends Extension {
         this._rotatingActor = actor;
         
         const rotateIcon = new Gio.ThemedIcon({ name: 'object-rotate-right-symbolic' });
+        
+        const nMonitors = global.display.get_n_monitors() || 1;
+        const levels = Array.from({ length: nMonitors }, () => ({
+            level: 0,
+            maxLevel: 1.0
+        }));
+        this._lastLabel = "";
+        
         // start to rotate
         this._rotateTimer = setInterval(() => {
             if (!this._rotatingActor || this._rotatingActor.is_destroyed()) {
@@ -83,19 +91,17 @@ export default class WindowRotateExtension extends Extension {
                 }
             }
             this._rotatingActor.rotation_angle_z = angleDeg;
-            let displayAngleDeg = angleDeg;
-            const levels = global.display.get_n_monitors() > 0 
-                ? Array(global.display.get_n_monitors()).fill({
-                    level: displayAngleDeg / 360 + 0.5,
-                    maxLevel: 1.0
-                  })
-                : [{ level: displayAngleDeg / 360 + 0.5, maxLevel: 1.0 }];
-            Main.osdWindowManager.show(
-                rotateIcon, 
-                `${displayAngleDeg.toFixed(1)}°`,
-                levels
-            );
-            
+
+            let displayAngle = angleDeg;
+            const currentLabel = `${displayAngle.toFixed(1)}°`;
+            if (currentLabel !== this._lastLabel) {
+                const progress = displayAngle / 360 + 0.5;
+                for (let i = 0; i < levels.length; i++) {
+                    levels[i].level = progress;
+                }
+                Main.osdWindowManager.show(rotateIcon, currentLabel, levels);
+                this._lastLabel = currentLabel;
+            }
         }, 16);
 
         // if unfocused, stop
@@ -136,6 +142,18 @@ export default class WindowRotateExtension extends Extension {
         if (!actor) return;
 
         actor.rotation_angle_z = 0;
+        const rotateIcon = new Gio.ThemedIcon({ name: 'object-rotate-right-symbolic' });
+        const levels = global.display.get_n_monitors() > 0 
+            ? Array(global.display.get_n_monitors()).fill({
+                level: 0.5,
+                maxLevel: 1.0
+              })
+            : [{ level: 0.5, maxLevel: 1.0 }];
+        Main.osdWindowManager.show(
+            rotateIcon, 
+            `0.0°`,
+            levels
+        );
     }
 
     disable() {
