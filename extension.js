@@ -24,13 +24,13 @@ export default class WindowRotateExtension extends Extension {
     }
 
     _toggleRotation() {
-        // 如果正在旋转，就停止
+        // if rotating, stop
         if (this._rotateTimer) {
             this._stopRotation();
             return;
         }
 
-        // 否则，开始旋转
+        // prepare to rotate
         const focusWin = global.display.focus_window;
         if (!focusWin) return;
 
@@ -40,7 +40,7 @@ export default class WindowRotateExtension extends Extension {
         actor.set_pivot_point(0.5, 0.5);
         this._rotatingActor = actor;
 
-        // 开启旋转
+        // start to rotate
         this._rotateTimer = setInterval(() => {
             if (!this._rotatingActor || this._rotatingActor.is_destroyed()) {
                 this._stopRotation();
@@ -57,12 +57,12 @@ export default class WindowRotateExtension extends Extension {
             this._rotatingActor.rotation_angle_z = angleDeg;
         }, 16);
 
-        // 辅助停止机制：点击鼠标或切换窗口即停止
+        // if unfocused, stop
         if (this._focusId === 0) {
             this._focusId = global.display.connect('notify::focus-window', () => this._stopRotation());
         }
         
-        // 点击屏幕任何地方停止
+        // click, stop
         this._clickId = global.stage.connect('button-press-event', () => this._stopRotation());
     }
 
