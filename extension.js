@@ -28,6 +28,13 @@ export default class WindowRotateExtension extends Extension {
             Shell.ActionMode.NORMAL,
             this._toggleRotation.bind(this)
         );
+        this._resetBindingId = Main.wm.addKeybinding(
+            'reset-window-rotation',
+            this.getSettings(),
+            Meta.KeyBindingFlags.NONE,
+            Shell.ActionMode.NORMAL,
+            this._resetRotation.bind(this)
+        );
     }
 
     _toggleRotation() {
@@ -90,6 +97,18 @@ export default class WindowRotateExtension extends Extension {
         }
 
         this._rotatingActor = null;
+    }
+
+     _resetRotation() {
+        this._stopRotation();
+
+        const focusWin = global.display.focus_window;
+        if (!focusWin) return;
+
+        const actor = focusWin.get_compositor_private();
+        if (!actor) return;
+
+        actor.rotation_angle_z = 0;
     }
 
     disable() {
