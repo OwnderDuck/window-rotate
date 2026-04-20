@@ -6,7 +6,8 @@
  * * See the LICENSE file in the repository root for full license text.
  */
  'use strict';
-
+ 
+import Gio from 'gi://Gio';
 import Meta from 'gi://Meta';
 import Shell from 'gi://Shell';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
@@ -53,7 +54,8 @@ export default class WindowRotateExtension extends Extension {
 
         actor.set_pivot_point(0.5, 0.5);
         this._rotatingActor = actor;
-
+        
+        const rotateIcon = new Gio.ThemedIcon({ name: 'object-rotate-right-symbolic' });
         // start to rotate
         this._rotateTimer = setInterval(() => {
             if (!this._rotatingActor || this._rotatingActor.is_destroyed()) {
@@ -69,6 +71,22 @@ export default class WindowRotateExtension extends Extension {
             const dy = mouseY - centerY;
             const angleDeg = Math.atan2(dy, dx) * 180 / Math.PI;
             this._rotatingActor.rotation_angle_z = angleDeg;
+
+            let displayAngle = angleDeg;
+            while (displayAngle < -180) displayAngle += 180;
+            while (displayAngle >= 180) displayAngle -= 180;
+            const levels = global.display.get_n_monitors() > 0 
+                ? Array(global.display.get_n_monitors()).fill({
+                    level: displayAngle / 360 + 0.5,
+                    maxLevel: 1.0
+                  })
+                : [{ level: displayAngle / 360 + 0.5, maxLevel: 1.0 }];
+            Main.osdWindowManager.show(
+                rotateIcon, 
+                `${Math.floor(displayAngle)}°`, 
+                levels
+            );
+            
         }, 16);
 
         // if unfocused, stop
@@ -114,6 +132,7 @@ export default class WindowRotateExtension extends Extension {
     disable() {
         this._stopRotation();
         Main.wm.removeKeybinding('rotate-window-press');
+        Main.wm.removeKeybinding('reset-window-rotation');
         this.settingsData = null;
     }
 }
