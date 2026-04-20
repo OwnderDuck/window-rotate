@@ -92,7 +92,7 @@ export default class WindowRotateExtension extends Extension {
             }
             this._rotatingActor.rotation_angle_z = angleDeg;
 
-            let displayAngle = angleDeg;
+            let displayAngle = -angleDeg;
             const currentLabel = `${displayAngle.toFixed(1)}°`;
             if (currentLabel !== this._lastLabel) {
                 const progress = displayAngle / 360 + 0.5;
