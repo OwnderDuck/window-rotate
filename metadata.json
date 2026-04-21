@@ -5,5 +5,5 @@
   "shell-version": ["50"],
   "url": "https://github.com/OwnderDuck/window-rotate",
   "settings-schema": "org.gnome.shell.extensions.window-rotate",
-  "version": 1
+  "version": 1.0.0
 }
