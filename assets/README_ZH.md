@@ -10,3 +10,6 @@ https://github.com/user-attachments/assets/3f3c900a-4b30-42e0-8a2e-59bfe7b20789
 ## 特性
 - **OSD** 显示角度
 - **TODO**: 可修改快捷键
+## Bugs
+- 在某些应用中，鼠标点击位置错位。
+- 窗口可能变糊。

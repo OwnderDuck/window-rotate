@@ -12,3 +12,6 @@ https://github.com/user-attachments/assets/3f3c900a-4b30-42e0-8a2e-59bfe7b20789
 ## Features
 - **OSD** (On-Screen Display) for the current angle
 - **TODO**: Customizable shortcuts
+## Bugs
+- Mouse click drift in certain applications.
+- Potential blurriness/loss of clarity.
