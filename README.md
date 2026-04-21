@@ -1,6 +1,7 @@
 **DEMO! Maybe DANGEROUS**
 # Window Rotate
 Window Rotate 是一个 Gnome 扩展，用于旋转窗口。
+![preview](/assets/preview.mp4)
 ## 使用方法
 - 按 Super+R 开启旋转，移动鼠标控制方向，再按 Super+R 退出旋转。
 - Super+Shift+R 重置旋转角度。
