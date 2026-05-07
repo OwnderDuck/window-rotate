@@ -18,15 +18,17 @@ export default class WindowRotateExtension extends Extension {
         this._rotateTimer = null;
         this._rotatingActor = null;
         this._focusId = 0;
-
+        const settings = this.getSettings();
         this._pressBindingId = Main.wm.addKeybinding(
             'rotate-window-press',
+            settings,
             Meta.KeyBindingFlags.NONE,
             Shell.ActionMode.NORMAL,
             this._toggleRotation.bind(this)
         );
         this._resetBindingId = Main.wm.addKeybinding(
             'reset-window-rotation',
+            settings,
             Meta.KeyBindingFlags.NONE,
             Shell.ActionMode.NORMAL,
             this._resetRotation.bind(this)
