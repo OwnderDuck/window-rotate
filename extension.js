@@ -6,32 +6,27 @@
  * * See the LICENSE file in the repository root for full license text.
  */
  'use strict';
- 
+// noinspection Unresolved file reference
 import Gio from 'gi://Gio';
 import Meta from 'gi://Meta';
 import Shell from 'gi://Shell';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
 
-import { SettingsData } from './settings_data.js';
-
 export default class WindowRotateExtension extends Extension {
     enable() {
-        this.settingsData = new SettingsData(this.getSettings());
         this._rotateTimer = null;
         this._rotatingActor = null;
         this._focusId = 0;
 
         this._pressBindingId = Main.wm.addKeybinding(
             'rotate-window-press',
-            this.getSettings(),
             Meta.KeyBindingFlags.NONE,
             Shell.ActionMode.NORMAL,
             this._toggleRotation.bind(this)
         );
         this._resetBindingId = Main.wm.addKeybinding(
             'reset-window-rotation',
-            this.getSettings(),
             Meta.KeyBindingFlags.NONE,
             Shell.ActionMode.NORMAL,
             this._resetRotation.bind(this)
@@ -160,6 +155,5 @@ export default class WindowRotateExtension extends Extension {
         this._stopRotation();
         Main.wm.removeKeybinding('rotate-window-press');
         Main.wm.removeKeybinding('reset-window-rotation');
-        this.settingsData = null;
     }
 }
