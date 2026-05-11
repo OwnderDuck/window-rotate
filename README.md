@@ -1,9 +1,8 @@
-**DEMO! Maybe DANGEROUS**
-
 [中文](assets/README_ZH)
 # Window Rotate
 Window Rotate is a Gnome extension designed to **rotate windows**.
 
+[<img width="200" src="https://github.com/andyholmes/gnome-shell-extensions-badge/raw/master/get-it-on-ego.svg">](https://extensions.gnome.org/extension/9766/window-rotate/)
 <img width="1920" height="1080" alt="Screenshot From 2026-04-18 17-20-08" src="https://github.com/user-attachments/assets/806a9488-8347-49e4-ba40-be3c595a4123" />
 
 ## Usage
