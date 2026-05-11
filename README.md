@@ -14,3 +14,4 @@ Window Rotate is a Gnome extension designed to **rotate windows**.
 ## Bugs
 - In some applications (notably certain Qt and GPU-accelerated clients such as kitty), mouse click positions may become offset from the visible cursor after window rotation. GTK and Chromium-based applications appear unaffected. This seems related to input region / pointer coordinate handling for transformed window actors under Wayland.
 - Potential blurriness/loss of clarity.
+- no OSD in GNOME 45

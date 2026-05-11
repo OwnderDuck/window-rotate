@@ -2,8 +2,8 @@
   "name": "Window Rotate",
   "description": "Press Super+R to rotate the focused window and press again to stop. Press Super+Shift+R to reset.",
   "uuid": "window-rotate@ownderduck.github.com",
-  "shell-version": ["50"],
+  "shell-version": ["45","46","47","48","49","50"],
   "url": "https://github.com/OwnderDuck/window-rotate",
   "settings-schema": "org.gnome.shell.extensions.window-rotate",
-  "version": 2
+  "version": 3
 }
