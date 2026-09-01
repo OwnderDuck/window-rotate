@@ -1,4 +1,4 @@
-[中文](assets/README_ZH)
+[中文](assets/README_ZH.md)
 # Window Rotate
 Window Rotate is a Gnome extension designed to **rotate windows**.
 
